@@ -1,0 +1,26 @@
+---
+- name: Install WezTerm (macOS)
+  when: ansible_facts['os_family'] == 'Darwin'
+  homebrew_cask:
+    name: wezterm
+
+- name: Enable the Copr repo for WezTerm
+  when: ansible_facts['distribution'] == 'Fedora'
+  command: dnf copr enable -y wezfurlong/wezterm-nightly
+  args:
+    creates: /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:wezfurlong:wezterm-nightly.repo
+
+- name: Install WezTerm
+  when: ansible_facts['distribution'] == 'Fedora'
+  package:
+    name: wezterm
+    state: present
+
+- name: Install WezTerm (Windows)
+  when: ansible_facts['os_family'] == 'Windows'
+  win_package:
+    name: WezTerm
+    product_id: WezTerm
+    state: present
+    path: https://github.com/wez/wezterm/releases/latest/download/WezTerm-windows-installer.exe
+    arguments: /quiet

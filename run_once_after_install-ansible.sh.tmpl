@@ -1,0 +1,24 @@
+#!/bin/bash
+set -e
+
+# Install Ansible if needed
+if [[ "{{ .chezmoi.os }}" == "darwin" ]]; then
+  which ansible || brew install ansible
+elif [[ "{{ .chezmoi.os }}" == "linux" ]]; then
+  if command -v dnf &> /dev/null; then
+    sudo dnf install -y ansible
+  elif command -v apt &> /dev/null; then
+    sudo apt update && sudo apt install -y ansible
+  fi
+elif [[ "{{ .chezmoi.os }}" == "windows" ]]; then
+  if ! command -v ansible &> /dev/null; then
+    echo "Please install Ansible manually on Windows (via WSL or pipx)."
+    echo "For WSL: sudo apt install -y ansible"
+    echo "For native Windows Python: pipx install ansible"
+    exit 1
+  fi
+fi
+
+# Run the playbook
+ansible-playbook ~/.config/bootstrap/playbook.yml \
+  --connection=local -i localhost,

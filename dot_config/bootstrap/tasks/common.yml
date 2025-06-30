@@ -1,0 +1,9 @@
+---
+- name: Install common CLI tools
+  package:
+    name:
+      - git
+      - fzf
+      - ripgrep
+      - fd-find
+    state: present
