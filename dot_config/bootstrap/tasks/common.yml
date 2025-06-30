@@ -10,6 +10,7 @@
       - fd-find
       - tmux
       - direnv
+      - kitty
     state: present
 
 - name: Install common CLI tools on macOS
@@ -22,6 +23,7 @@
       - fd
       - tmux
       - direnv
+      - kitty
     state: present
 
 - name: Install common CLI tools on Windows using WinGet
@@ -39,3 +41,4 @@
         - { id: "BurntSushi.ripgrep.MSVC", creates: "C:\\Program Files\\ripgrep\\rg.exe" }
         - { id: "junegunn.fzf", creates: "C:\\Program Files\\fzf\\fzf.exe" }
         - { id: "direnv.direnv", creates: "C:\\Program Files\\direnv\\direnv.exe" }
+        - { id: "kitty.kitty", creates: "C:\\Program Files\\Kitty\\kitty.exe" }
