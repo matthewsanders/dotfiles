@@ -1,6 +1,3 @@
 
-#Setting config directory for neovim so we do not need to symlink or copy
-$env:XDG_CONFIG_HOME = "$HOME/.config"
+{{ template "main_hooks.tmpl" . }}
 
-{{ template "direnv_hook.tmpl" . }}
-{{ template "starship_hook.tmpl" . }}

@@ -1,10 +1,26 @@
 {{- if eq .chezmoi.os "linux" -}}
+
+eval "$(direnv hook bash)"
+
+#Starship
 export STARSHIP_CONFIG=~/.config/starship/starship.toml
 eval "$(starship init bash)"
+
 {{- else if eq .chezmoi.os "darwin" -}}
-# starship
+
+eval "$(direnv hook bash)"
+
+#Starship
 export STARSHIP_CONFIG=~/.config/starship/starship.toml
 eval "$(starship init bash)"
+
 {{- else if eq .chezmoi.os "windows" -}}
+
+#Setting config directory for neovim so we do not need to symlink or copy
+$env:XDG_CONFIG_HOME = "$HOME/.config"
+
+Invoke-Expression (&direnv hook powershell)
+
+#Starship
 Invoke-Expression (&starship init powershell)
 {{- end }}

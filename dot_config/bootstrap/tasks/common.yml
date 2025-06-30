@@ -1,9 +1,41 @@
 ---
-- name: Install common CLI tools
+- name: Install common CLI tools on Fedora
+  when: ansible_facts['os_family'] == 'RedHat'
+  become: true
   package:
     name:
       - git
       - fzf
       - ripgrep
       - fd-find
+      - tmux
+      - direnv
     state: present
+
+- name: Install common CLI tools on macOS
+  when: ansible_facts['os_family'] == 'Darwin'
+  homebrew:
+    name:
+      - git
+      - fzf
+      - ripgrep
+      - fd
+      - tmux
+      - direnv
+    state: present
+
+- name: Install common CLI tools on Windows using WinGet
+  when: ansible_facts['os_family'] == 'Windows'
+  block:
+    - name: Ensure required CLI tools via WinGet
+      win_command: >
+        winget install --exact --id {{ item.id }} --accept-package-agreements --accept-source-agreements
+      args:
+        creates: "{{ item.creates }}"
+      loop:
+        - { id: "Git.Git", creates: "C:\\Program Files\\Git\\bin\\git.exe" }
+        - { id: "tmux.tmux", creates: "C:\\Program Files\\tmux\\tmux.exe" }
+        - { id: "sharkdp.FD", creates: "C:\\Program Files\\fd\\fd.exe" }
+        - { id: "BurntSushi.ripgrep.MSVC", creates: "C:\\Program Files\\ripgrep\\rg.exe" }
+        - { id: "junegunn.fzf", creates: "C:\\Program Files\\fzf\\fzf.exe" }
+        - { id: "direnv.direnv", creates: "C:\\Program Files\\direnv\\direnv.exe" }

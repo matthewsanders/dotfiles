@@ -1,8 +1,7 @@
 {{ if eq .chezmoi.os "darwin" -}}
 # macOS .bashrc contents
 
-{{ template "starship_hook.tmpl" . }}
-{{ template "direnv_hook.tmpl" . }}
+{{ template "main_hooks.tmpl" . }}
 
 {{ else if eq .chezmoi.os "linux" -}}
 # .bashrc
@@ -31,7 +30,6 @@ if [ -d ~/.bashrc.d ]; then
 fi
 unset rc
 
-{{ template "starship_hook.tmpl" . }}
-{{ template "direnv_hook.tmpl" . }}
+{{ template "main_hooks.tmpl" . }}
 
 {{ end -}}
