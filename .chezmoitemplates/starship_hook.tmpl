@@ -1,0 +1,10 @@
+{{- if eq .chezmoi.os "linux" -}}
+export STARSHIP_CONFIG=~/.config/starship/starship.toml
+eval "$(starship init bash)"
+{{- else if eq .chezmoi.os "darwin" -}}
+# starship
+export STARSHIP_CONFIG=~/.config/starship/starship.toml
+eval "$(starship init bash)"
+{{- else if eq .chezmoi.os "windows" -}}
+Invoke-Expression (&starship init powershell)
+{{- end }}

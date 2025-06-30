@@ -1,0 +1,7 @@
+{{- if eq .chezmoi.os "linux" -}}
+eval "$(direnv hook bash)"
+{{- else if eq .chezmoi.os "darwin" -}}
+eval "$(direnv hook bash)"
+{{- else if eq .chezmoi.os "windows" -}}
+Invoke-Expression (&direnv hook powershell)
+{{- end }}

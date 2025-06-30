@@ -9,6 +9,7 @@
         remote_regular_user: "{{ ansible_env.SUDO_USER or ansible_user_id }}"
     - import_tasks: tasks/fonts.yml
     - import_tasks: tasks/common.yml
+    - import_tasks: tasks/direnv.yml
     - import_tasks: tasks/neovim.yml
     - import_tasks: tasks/wezterm.yml
     - import_tasks: tasks/starship.yml
